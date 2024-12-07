@@ -16,7 +16,7 @@ fn main() {
     });
     for i in 0..4550 {
         let mut conn = connect();
-        println!("******* Running SET commands {} *******", i);
+        println!("******* Running SET commands  ******* {} ", i);
 
         let set_name = "users";
 
