@@ -7,7 +7,7 @@ fn main() {
     let names = "Hello world";
     let names2 = "Hello world once more timee";
     info!("Hello, world! {} {}", names, names2);
-    if names2.len()>10 {
+    if names2.len() > 10 {
         info!("Hello, world!2 {} {}", names, names2);
     }
     let chars = names2.chars();
