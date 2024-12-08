@@ -2,7 +2,8 @@ use log::{debug, info};
 use redis::Commands;
 use std::env;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     env_logger::init();
     let names = "Hello world";
     let names2 = "Hello world once more timee";
@@ -14,16 +15,21 @@ fn main() {
     chars.for_each(move |x| {
         debug!("Hello, world!2 {} {}", names, x);
     });
+
+    let mut conn = connect();
     for i in 0..4550 {
-        let mut conn = connect();
-        println!("******* Running SET commands  ******* {} ", i);
-
-        let set_name = "users";
-
-        let _: () = conn
-            .sadd(set_name, "user1".to_owned() + i.to_string().as_str())
-            .expect("failed to execute SADD for 'users'");
+        set_redis_data(i, &mut conn).await;
     }
+}
+
+async fn set_redis_data(i: i32, conn: &mut redis::Connection) {
+    println!("******* Running SET commands  ******* {} ", i);
+
+    let set_name = "users";
+
+    let _: () = conn
+        .sadd(set_name, "user1".to_owned() + i.to_string().as_str())
+        .expect("failed to execute SADD for 'users'");
 }
 
 fn connect() -> redis::Connection {
