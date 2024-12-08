@@ -5,24 +5,24 @@ use std::env;
 #[tokio::main]
 async fn main() {
     env_logger::init();
-    let names = "Hello world";
-    let names2 = "Hello world once more timee";
-    info!("Hello, world! {} {}", names, names2);
-    if names2.len() > 10 {
-        info!("Hello, world!2 {} {}", names, names2);
+    let hello_world = "Hello world";
+    let hello_world_once_more = "Hello world once more timee";
+    info!("Hello, world! {} {}", hello_world, hello_world_once_more);
+    if hello_world_once_more.len() > 10 {
+        info!("Hello, world!2 {} {}", hello_world, hello_world_once_more);
     }
-    let chars = names2.chars();
+    let chars = hello_world_once_more.chars();
     chars.for_each(move |x| {
-        debug!("Hello, world!2 {} {}", names, x);
+        debug!("Hello, world!2 {} {}", hello_world, x);
     });
 
     let mut conn = connect();
     for i in 0..4550 {
-        set_redis_data(i, &mut conn).await;
+        call_redis_sadd(i, &mut conn).await;
     }
 }
 
-async fn set_redis_data(i: i32, conn: &mut redis::Connection) {
+async fn call_redis_sadd(i: i32, conn: &mut redis::Connection) {
     println!("******* Running SET commands  ******* {} ", i);
 
     let set_name = "users";
