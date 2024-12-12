@@ -13,7 +13,7 @@ async fn main() {
     }
     let chars = hello_world_once_more.chars();
     chars.for_each(move |x| {
-        debug!("Hello, world!2 {} {}", hello_world, x);
+        debug!("Hello, world! {} {}", hello_world, x);
     });
 
     let mut conn = connect();
@@ -25,6 +25,7 @@ async fn main() {
 async fn call_redis_sadd(i: i32, conn: &mut redis::Connection) {
     println!("******* Running SET commands  ******* {} ", i);
 
+    let _: () = conn.set(i.to_string() + "_key223213", i.to_string() + "Hello Value").expect("Do not make dumb mistake again");
     let set_name = "users";
 
     let _: () = conn
