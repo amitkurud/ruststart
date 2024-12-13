@@ -1,6 +1,6 @@
 use log::{debug, info};
 use redis::Commands;
-use std::env;
+use std::{env, ops::Add};
 
 #[tokio::main]
 async fn main() {
@@ -25,7 +25,7 @@ async fn main() {
 async fn call_redis_sadd(i: i32, conn: &mut redis::Connection) {
     println!("******* Running SET commands  ******* {} ", i);
 
-    let _: () = conn.set(i.to_string() + "_key223213", i.to_string() + "Hello Value").expect("Do not make dumb mistake again");
+    let _: () = conn.set(i.to_string() + "_key223213", i.to_string() + "").expect("Do not make dumb mistake again");
     let set_name = "users";
 
     let _: () = conn
@@ -47,7 +47,6 @@ fn connect() -> redis::Connection {
 
     let redis_conn_url = format!("{}://:{}@{}", uri_scheme, redis_password, redis_host_name);
     //println!("{}", redis_conn_url);
-
     redis::Client::open(redis_conn_url.as_str())
         .expect("Invalid connection URL")
         .get_connection()
