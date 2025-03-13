@@ -1,4 +1,5 @@
 use crate::redis::db::{call_redis_sadd, connect};
+use chashmap::CHashMap;
 use log::{debug, info};
 use std::collections::{linked_list, HashSet};
 mod redis;
@@ -7,6 +8,11 @@ mod redis;
 async fn main() {
     env_logger::init();
 
+    let vrr: CHashMap<String, String> = CHashMap::new();
+    vrr.insert("Hello".to_string(), "world".to_string());
+    vrr.into_iter().for_each(|(k, v)| {
+        info!("map Hello, world! {} {}", k, v);
+    });
     let mut mrarr = vec!["Hello", "world", "from", "Rust", "and", "Tokio"];
     mrarr.append(&mut vec!["Hello", "world", "from", "Rust", "and", "Tokio"]);
     mrarr.iter().for_each(|x| {
@@ -19,6 +25,7 @@ async fn main() {
     let hello_world = "Hello world";
     let hello_world_once_more = "Hello world once more timee";
     info!("{}", hello_world_once_more);
+
     info!("Hello, world! {} {}", hello_world, hello_world_once_more);
     if hello_world_once_more.len() > 10 {
         info!("Hello, world!2 {} {}", hello_world, hello_world_once_more);
